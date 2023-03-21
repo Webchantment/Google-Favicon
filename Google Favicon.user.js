@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Google Favicon
 // @namespace    https://greasyfork.org/en/users/943407-webchantment
-// @version      1.3
+// @version      1.4
 // @description  Display Favicons on Google Search
 // @author       Webchantment
-// @include      https://www.google.tld/search?q=*
+// @include      https://www.google.tld/search?*
 // @grant        none
 // ==/UserScript==
 
@@ -12,6 +12,10 @@
 
 	/**SETTINGS**/
 	const iconSize = 16; //use 16 or 24
+
+	//check if favicons already exist
+	if (document.querySelector("#search > * img[class='XNo5Ab']"))
+		return;
 
 	const organic = document.querySelectorAll("#search > * cite");
 	const topAds = document.querySelectorAll("#tads > * span[role='text']");
@@ -23,7 +27,7 @@
 
 	function prependFavicon(element, domain, isAd)
 	{
-		if (domain.startsWith("http") || isAd)
+		if (domain.includes(".") || isAd)
 		{
 			const favicon = document.createElement("img");
 			favicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=${iconSize}`;
